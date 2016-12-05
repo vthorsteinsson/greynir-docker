@@ -50,3 +50,13 @@ This will expose the Greynir database on port 5432.
 The default settings will expose the web server on port 5000.
 
 `docker run -d --name greynir_web -p 5000:5000 --link greynir_db greynir/web`
+
+
+## Running several containers
+`greynir_web` depends on the `GREYNIR_DB_HOST` and `GREYNIR_DB_PORT` environment variables. If there is a need to run multiple instances of Greynir you can set these variables when you run greynir_web.
+
+Example:
+
+`docker run --name <new_greynir_db> -p <new-db-port>:5432 greynir/db`
+
+`docker run --name <new_greynir_web> -e "GREYNIR_DB_HOST=new_greynir_db" -p <new-web-port>:5000 --link <new_greynir_db> greynir/web`
